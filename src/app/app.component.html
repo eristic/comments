@@ -1,0 +1,61 @@
+<div class="container">
+  <section class="form-container">
+    <form [formGroup]="commentForm">
+
+      <input 
+        placeholder="Enter your name" 
+        id="name" 
+        type="text" 
+        formControlName="name" 
+        name="name" 
+        required
+      >
+
+      <div *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+        <div *ngIf="name?.hasError('required')">
+          Name is required.
+        </div>
+      </div>
+
+      <textarea 
+        id="message"
+        placeholder="Enter your message" 
+        formControlName="message" 
+        required
+      >
+      </textarea>
+
+      <div *ngIf="message?.invalid && (message?.dirty || message?.touched)">
+        <div *ngIf="message?.hasError('required')">
+          Message is required.
+        </div>
+      </div>
+
+      <button 
+        [disabled]="commentForm.invalid"
+        (click)="saveComment(); this.commentForm.reset()" 
+        class="pushable"
+      >
+        <span class="front">Submit</span>
+      </button>
+    
+    </form>
+  </section><!--/form-container-->
+
+  <section class="comments-container">
+    <div *ngFor="let comment of comments">
+      <div class="comments">
+        <div class="message-container">
+          <p class="comment-message">{{comment.message}}</p>
+        </div>
+        <div class="date-name-grid">
+          <p class="comment-date">{{comment.created | date:'fullDate'}}</p>
+          <p class="comment-name">{{comment.name}}</p>
+        </div>
+      </div>
+    </div>
+  </section><!-- comments-container -->
+
+</div><!-- /container-->
+
+<router-outlet></router-outlet>
